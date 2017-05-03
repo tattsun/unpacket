@@ -19,6 +19,6 @@ int main() {
   IPPacketPtr pkt = nullptr;
   while(1) {
     pkt = p->capture();
-    std::cout << "received packet" << std::endl;
+    std::cout << "SRC: " << pkt->ip_src() << "\t\tDST: " << pkt->ip_dst() << std::endl;
   }
 }
