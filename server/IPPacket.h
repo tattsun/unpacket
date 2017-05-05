@@ -23,7 +23,7 @@ public:
   const unsigned char* data();
 
   IPProtocolType protocol();
-private:
+protected:
   struct pcap_pkthdr* header;
   const unsigned char* packet;
   const struct ip *ip;
@@ -32,3 +32,4 @@ private:
 using IPPacketPtr = std::unique_ptr<IPPacket>;
 
 #endif
+

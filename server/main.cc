@@ -3,6 +3,9 @@
 #include <memory>
 #include <cstdlib>
 
+#include <pcap.h>
+#include <stdlib.h>
+
 #include "IPPacket.h"
 #include "PacketCapturer.h"
 
@@ -16,8 +19,10 @@ int main() {
     std::abort();
   }
 
-  IPPacketPtr pkt = nullptr;
+  pcap_pkthdr** header = NULL;
+  const unsigned char** packet = NULL;
   while(1) {
+    p->capture(header, packet);
     pkt = p->capture();
     std::cout
       << "SRC: " << pkt->ip_src()

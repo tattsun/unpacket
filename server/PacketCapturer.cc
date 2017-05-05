@@ -27,23 +27,24 @@ void PacketCapturer::start(std::string &err) {
   }
 }
 
-IPPacketPtr PacketCapturer::capture() {
-  const unsigned char* packet = NULL;
-  pcap_pkthdr* header = new pcap_pkthdr;
+void PacketCapturer::capture(pcap_pkthdr** header, const unsigned char** packet) {
+  const unsigned char* pkt = NULL;
+  pcap_pkthdr* hdr = new pcap_pkthdr;
 
   while(1) {
-    packet = pcap_next(handle, header);
+    pkt = pcap_next(handle, hdr);
 
-    if(packet == NULL)
+    if(pkt == NULL)
       continue;
 
-    if(header->len < sizeof(struct ether_header) + sizeof(struct ip))
+    if(hdr->len < sizeof(struct ether_header) + sizeof(struct ip))
       continue;
 
     break;
   }
 
-  return std::unique_ptr<IPPacket>(new IPPacket(header, packet));
+  *header = hdr;
+  *packet = pkt;
 }
 
 

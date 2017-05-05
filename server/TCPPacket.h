@@ -2,13 +2,14 @@
 
 #include "IPPacket.h"
 
-class TCPPacket {
+class TCPPacket : public IPPacket {
 public:
-  TCPPacket(IPPacketPtr ip);
+  TCPPacket(struct pcap_pkthdr* header, const unsigned char* packet);
 
   unsigned short src_port();
   unsigned short dst_port();
 private:
-  IPPacketPtr ip;
   const struct tcphdr* tcp;
 };
+
+using TCPPacketPtr = std::unique_ptr<TCPPacket>;

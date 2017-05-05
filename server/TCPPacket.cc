@@ -1,8 +1,8 @@
 #include "TCPPacket.h"
 
-TCPPacket::TCPPacket(IPPacketPtr ip)
-  : ip(std::move(ip))
-  , tcp(reinterpret_cast<const struct tcphdr*>(ip->data())) {
+TCPPacket::TCPPacket(struct pcap_pkthdr* header, const unsigned char* packet)
+  : IPPacket(header, packet)
+  , tcp(reinterpret_cast<const struct tcphdr*>(IPPacket::data())) {
 }
 
 unsigned short TCPPacket::src_port() {

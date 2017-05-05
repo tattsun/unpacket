@@ -10,7 +10,7 @@ public:
   PacketCapturer(const std::string& dev, int bufsiz);
   
   void start(std::string& err);
-  IPPacketPtr capture();
+  void capture(pcap_pkthdr** header, const unsigned char** packet);
 private:
   const std::string dev;
   int bufsiz;
